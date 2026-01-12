@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Search, Menu } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,12 +11,19 @@ export default function Header() {
     return (
         <header className="fixed top-0 left-0 right-0 z-50 glass-panel border-b-0 border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+                <div className="flex items-center justify-between h-20 md:h-24">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="/" className="text-2xl font-bold tracking-tighter">
-                            <span className="text-[--primary]">파밍</span>
-                            <span className="text-white">레터</span>
+                        <Link href="/" className="flex items-center">
+                            <div className="relative w-48 h-20 md:w-28 md:h-14">
+                                <Image
+                                    src="/logo-B.svg"
+                                    alt="Farming Letter Logo"
+                                    fill
+                                    className="object-contain invert mix-blend-screen"
+                                    priority
+                                />
+                            </div>
                         </Link>
                     </div>
 

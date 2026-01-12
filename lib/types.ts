@@ -5,7 +5,7 @@ export interface Platform {
 }
 
 export interface Game {
-  id: number;
+  id: string | number;
   title: string;
   summary?: string;
   coverImage: string;
@@ -14,6 +14,8 @@ export interface Game {
   rating: number; // Metacritic score or similar (0-100)
   price?: number;
   discount?: number; // percentage off, e.g. 20 for 20%
+  genres?: string[];
+  developers?: string[];
 }
 
 export interface News {

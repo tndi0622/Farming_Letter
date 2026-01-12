@@ -3,12 +3,30 @@ import NewsletterHero from '@/components/NewsletterHero';
 import QuickBriefing from '@/components/QuickBriefing';
 import GameCard from '@/components/GameCard';
 import PlatformSection from '@/components/PlatformSection';
-import { newReleases, popularGames, onSaleGames, dailyBriefing, recentNewsletters } from '@/lib/mockData';
+import { newReleases as mockNewReleases, popularGames as mockPopularGames, onSaleGames as mockOnSaleGames, dailyBriefing as mockDailyBriefing, recentNewsletters } from '@/lib/mockData';
 import NewsletterArchive from '@/components/NewsletterArchive';
 import { ArrowRight, Flame, Percent, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { getNewReleases, getPopularGames } from '@/lib/rawgClient';
+import { getDeals } from '@/lib/cheapSharkClient';
 
-export default function Home() {
+export default async function Home() {
+  const [fetchedNewReleases, fetchedPopularGames, fetchedDeals] = await Promise.all([
+    getNewReleases(),
+    getPopularGames(),
+    getDeals()
+  ]);
+
+  const newReleases = fetchedNewReleases.length > 0 ? fetchedNewReleases : mockNewReleases;
+  const popularGames = fetchedPopularGames.length > 0 ? fetchedPopularGames : mockPopularGames;
+  const onSaleGames = fetchedDeals.length > 0 ? fetchedDeals : mockOnSaleGames;
+
+  const dailyBriefing = {
+    ...mockDailyBriefing,
+    newReleases: newReleases.slice(0, 3),
+    sales: onSaleGames
+  };
+
   return (
     <div className="min-h-screen pb-20">
       <Header />

@@ -61,9 +61,9 @@ export default function NewsletterHero() {
                 </div>
 
                 {/* Main Heading */}
-                <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
-                    게임 트렌드 <br />
-                    <span className="text-[--primary]">매일 아침 배송.</span>
+                <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 md:mb-6 flex flex-col items-center gap-3 md:gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">게임 트렌드</span>
+                    <span className="text-[--primary]">매주 배송.</span>
                 </h1>
 
                 {/* Subheading */}
