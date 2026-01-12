@@ -24,8 +24,8 @@ export default function PlatformSection({ games }: PlatformSectionProps) {
 
     return (
         <section>
-            <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">플랫폼별 추천</h2>
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+                <h2 className="text-xl md:text-2xl font-bold">플랫폼별 추천</h2>
             </div>
 
             <div className="flex space-x-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
@@ -48,9 +48,9 @@ export default function PlatformSection({ games }: PlatformSectionProps) {
                 })}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in zoom-in duration-300">
+            <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:pb-0 md:mx-0 md:px-0 animate-in fade-in zoom-in duration-300 snap-x snap-mandatory hide-scrollbar">
                 {filteredGames.slice(0, 4).map((game) => (
-                    <div key={`${activeTab}-${game.id}`} className="h-[300px]">
+                    <div key={`${activeTab}-${game.id}`} className="min-w-[280px] w-[80vw] md:w-auto h-[300px] snap-center">
                         <GameCard game={game} />
                     </div>
                 ))}

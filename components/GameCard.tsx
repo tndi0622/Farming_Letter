@@ -39,7 +39,7 @@ export default function GameCard({ game, showRank }: GameCardProps) {
             {/* Content */}
             <div className="p-4 flex flex-col flex-grow">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="font-bold text-lg leading-tight group-hover:text-[--primary] transition-colors line-clamp-2">
+                    <h3 className="font-bold text-lg leading-tight group-hover:text-[--primary] transition-colors line-clamp-2 break-keep">
                         {showRank && <span className="mr-2 text-[--primary]">#{showRank}</span>}
                         {game.title}
                     </h3>

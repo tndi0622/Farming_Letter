@@ -31,3 +31,11 @@ export interface Briefing {
   sales: Game[];
   timeLeftSeconds: number; // For countdown
 }
+
+export interface Newsletter {
+  id: string;
+  title: string;
+  date: string;
+  summary: string;
+  thumbnail: string;
+}

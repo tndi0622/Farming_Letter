@@ -21,7 +21,7 @@ export default function QuickBriefing({ data }: QuickBriefingProps) {
                     <div className="flex items-center space-x-3">
                         <div className="flex items-center space-x-2 bg-[--warning] text-black px-2 py-1 rounded font-bold text-xs">
                             <Zap className="w-3 h-3 fill-current" />
-                            <span>GameQuick</span>
+                            <span>파밍브리핑</span>
                         </div>
                         <div className="flex items-center space-x-1 text-[--warning] text-sm font-medium animate-pulse">
                             <Clock className="w-4 h-4" />
