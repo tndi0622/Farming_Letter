@@ -1,4 +1,5 @@
 import { Game } from './types';
+import { newReleases, popularGames, onSaleGames, featuredGame } from './mockData';
 
 const API_KEY = process.env.NEXT_PUBLIC_RAWG_API_KEY;
 const BASE_URL = 'https://api.rawg.io/api';
@@ -87,6 +88,16 @@ function mapRawgGameToGame(rawgGame: any): Game {
 }
 
 export async function getGameDetails(id: string): Promise<Game | null> {
+    // 1. Check Mock Data first
+    const numericId = parseInt(id);
+    if (!isNaN(numericId)) {
+        const allMocks = [...newReleases, ...popularGames, ...onSaleGames, featuredGame];
+        const foundMock = allMocks.find(g => g.id === numericId);
+        if (foundMock) {
+            return foundMock;
+        }
+    }
+
     if (!API_KEY) return null;
 
     try {
@@ -95,7 +106,8 @@ export async function getGameDetails(id: string): Promise<Game | null> {
         });
 
         if (!response.ok) {
-            throw new Error(`Error fetching game details: ${response.statusText}`);
+            console.error(`Error fetching game details (${response.status}): ${response.statusText}`);
+            return null;
         }
 
         const data = await response.json();
@@ -103,10 +115,6 @@ export async function getGameDetails(id: string): Promise<Game | null> {
 
         // Translate summary if available
         if (game.summary) {
-            // Translate only the first 1000 characters to save quota/time if needed, 
-            // but for quality let's try full text or split if too long. 
-            // Google API has limits per request, but 5k chars usually. 
-            // rawg descriptions can be HTML. description_raw is safer.
             game.summary = await translateText(game.summary);
         }
 
@@ -118,29 +126,60 @@ export async function getGameDetails(id: string): Promise<Game | null> {
 }
 
 export async function getNewReleases(): Promise<Game[]> {
-    // RAWG API has real data. Since we are simulating 2026 but data is from 2024/2025,
-    // we fetch the latest *real* upcoming/recent games to avoid 2033+ junk data.
-    const dates = '2024-09-01,2025-12-31';
-    console.log(`Fetching new releases with dates: ${dates}`);
+    // Fetch upcoming/recent games but order by POPULARITY (-added) 
+    // to filter for "Major Publishers" and "High Interest" games 
+    // as requested by the user, avoiding obscure shovelware.
+    const dates = '2024-06-01,2025-12-31';
+    console.log(`Fetching curated new releases with dates: ${dates}`);
 
     const games = await getGames({
         dates: dates,
-        ordering: '-released', // Latest within the range
+        ordering: '-added', // Changed from -released to -added effectively highlights "Major" & "Anticipated"
         page_size: '6'
     });
     console.log(`Fetched ${games.length} new releases`);
     return games;
 }
 
-export async function getPopularGames(): Promise<Game[]> {
-    // Fetch all-time popular games if date-restricted query fails
+export async function getIndieSpotlight(): Promise<Game[]> {
+    // "Global Indie Spotlight" - Simulating "Latest Game Show" entries (G-Star/E3/TGS)
+    // We look for very recent (late 2025 - current 2026) high-rated Indies.
+    // Ideally this would be a crawled list from specific event pages, 
+    // but for now we use 'Indie' genre + 'Recent' + 'Verified Quality'.
+    const dates = '2025-09-01,2026-12-31';
     const games = await getGames({
-        ordering: '-added', // Most added to libraries (Popularity)
-        metacritic: '80,100', // High quality
+        ordering: '-rating', // Highest rated first
+        genres: 'indie',
+        dates: dates,
+        metacritic: '85,100', // Exceptional quality (Hidden Gems)
         page_size: '8'
     });
-    console.log(`Fetched ${games.length} popular games`);
     return games;
+}
+
+export async function getPopularGames(): Promise<Game[]> {
+    // "Major Games" / "Trending AAA"
+    // Filter for games released in the last ~1 year (relative to Jan 2026) + High Popularity
+    const dates = '2025-01-01,2026-01-13';
+    const games = await getGames({
+        dates: dates,
+        ordering: '-added', // Trending recently
+        metacritic: '80,100', // High quality
+        page_size: '8', // Limit to top 8
+    });
+    console.log(`Fetched ${games.length} major/popular games`);
+    return games;
+}
+
+export async function getPlatformTrending(platformId: string): Promise<Game[]> {
+    // Fetch trending games specific to a platform
+    const dates = '2024-01-01,2026-01-13'; // Extended range for platform libraries
+    return getGames({
+        platforms: platformId,
+        dates: dates,
+        ordering: '-added', // Popularity
+        page_size: '4' // Top 4 per platform
+    });
 }
 
 export async function getOnSaleGames(): Promise<Game[]> {

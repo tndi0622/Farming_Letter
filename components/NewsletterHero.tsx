@@ -1,46 +1,9 @@
 'use client';
 
-import { Mail, CheckCircle, ArrowRight, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, Zap } from 'lucide-react';
+import Link from 'next/link';
 
 export default function NewsletterHero() {
-    const [email, setEmail] = useState('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus('loading');
-        setErrorMessage('');
-
-        try {
-            // Import dynamically or check for instance availability
-            const { supabase } = await import('@/lib/supabaseClient');
-
-            if (!supabase) {
-                throw new Error('시스템 점검 중입니다. 잠시 후 다시 시도해주세요.');
-            }
-
-            const { error } = await supabase
-                .from('subscribers')
-                .insert([{ email }]);
-
-            if (error) {
-                if (error.code === '23505') {
-                    throw new Error('이미 구독 중인 이메일입니다.');
-                }
-                throw error;
-            }
-
-            setStatus('success');
-            setEmail('');
-        } catch (error: any) {
-            console.error('Subscription error:', error);
-            setStatus('error'); // There is no 'error' status in the original state type, need to update it too
-            setErrorMessage(error.message || '오류가 발생했습니다.');
-        }
-    };
 
     return (
         <div className="relative w-full h-screen border-b border-white/5 flex items-center justify-center overflow-hidden">
@@ -71,48 +34,19 @@ export default function NewsletterHero() {
                     더 이상 찾아헤매지 마세요. 신작 소식부터 숨은 명작, 최저가 할인 정보까지 <span className="text-white font-semibold">5분 요약 뉴스레터</span>로 받아보세요.
                 </p>
 
-                {/* Signup Form */}
-                <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-                    {status === 'success' ? (
-                        <div className="bg-green-500/10 border border-green-500/20 text-green-400 px-8 py-6 rounded-2xl flex flex-col items-center space-y-2 backdrop-blur-md">
-                            <CheckCircle className="w-8 h-8 mb-2" />
-                            <span className="font-bold text-lg">구독해주셔서 감사합니다!</span>
-                            <span className="text-sm opacity-80">메일함을 확인해주세요.</span>
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-[--primary] to-[--secondary] rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                            <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-black/80 sm:bg-black rounded-2xl sm:rounded-full p-2 border border-white/10 shadow-2xl gap-2 sm:gap-0">
-                                <div className="pl-2 sm:pl-4 text-gray-400 hidden sm:block">
-                                    <Mail className="w-5 h-5" />
-                                </div>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="이메일 주소를 입력하세요"
-                                    required
-                                    className="flex-1 bg-transparent border-none text-white px-4 py-3 focus:outline-none placeholder-gray-500 text-base md:text-lg text-center sm:text-left rounded-xl sm:rounded-none"
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={status === 'loading'}
-                                    className="px-6 md:px-8 py-3 bg-white text-black font-bold rounded-xl sm:rounded-full hover:bg-gray-200 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2 whitespace-nowrap"
-                                >
-                                    <span>{status === 'loading' ? '구독 중...' : '무료 구독하기'}</span>
-                                    {!status && <ArrowRight className="w-4 h-4" />}
-                                </button>
-                            </div>
-                            <p className="mt-4 text-xs md:text-sm text-gray-500">
-                                평생 무료. 언제든 구독 취소 가능합니다.
-                            </p>
-                        </form>
-                    )}
-                    {status === 'error' && (
-                        <p className="mt-2 text-red-400 text-sm md:text-base animate-in fade-in slide-in-from-top-2">
-                            {errorMessage}
-                        </p>
-                    )}
+                {/* Signup Button (Direct Link) */}
+                <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 flex justify-center">
+                    <div className="relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-[--primary] to-[--secondary] rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                        <Link
+                            href="https://page.stibee.com/subscriptions/465991"
+                            target="_blank"
+                            className="relative flex items-center justify-between space-x-2 sm:space-x-4 bg-white text-black px-5 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-sm sm:text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
+                        >
+                            <span>이번 주 게임 업계 요약, 메일로 받아보기</span>
+                            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

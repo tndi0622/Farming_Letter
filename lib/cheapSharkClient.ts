@@ -8,6 +8,7 @@ export async function getDeals(params: Record<string, string> = {}): Promise<Gam
         onSale: '1',
         pageSize: '8',
         sortBy: 'Metacritic', // Prioritize quality/popularity
+        steamRating: '80', // Only show games with Very Positive reviews or better
         ...params,
     });
 
@@ -47,7 +48,8 @@ function mapDealToGame(deal: any): Game {
         releaseDate: deal.releaseDate ? new Date(deal.releaseDate * 1000).toISOString().split('T')[0] : 'N/A',
         rating: deal.steamRatingPercent ? parseInt(deal.steamRatingPercent) : parseInt(deal.metacriticScore) || 0,
         price: parseFloat(deal.salePrice),
-        discount: Math.round(parseFloat(deal.savings))
+        discount: Math.round(parseFloat(deal.savings)),
+        storeLink: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
     };
 }
 

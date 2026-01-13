@@ -6,21 +6,26 @@ import GameCard from './GameCard';
 import { Monitor, Gamepad2, Gamepad, Tv } from 'lucide-react';
 
 interface PlatformSectionProps {
-    games: Game[];
+    data: {
+        PC: Game[];
+        PS5: Game[];
+        Xbox: Game[];
+        Switch: Game[];
+    };
 }
 
-export default function PlatformSection({ games }: PlatformSectionProps) {
-    const [activeTab, setActiveTab] = useState('PC');
+export default function PlatformSection({ data }: PlatformSectionProps) {
+    const [activeTab, setActiveTab] = useState<'PC' | 'PS5' | 'Xbox' | 'Switch'>('PC');
 
     const platforms = [
         { id: 'PC', icon: Monitor, label: 'PC' },
         { id: 'PS5', icon: Gamepad2, label: '플레이스테이션' },
         { id: 'Xbox', icon: Gamepad, label: '엑스박스' },
         { id: 'Switch', icon: Tv, label: '닌텐도' },
-    ];
+    ] as const;
 
-    const filteredGames = games.filter(g => g.platforms.some(p => p.includes(activeTab) || activeTab === 'PC' && p.includes('PC')));
-    // Simple filter logic. 'includes' is used loosely.
+    const filteredGames = data[activeTab] || [];
+    // Data is already filtered server-side per platform
 
     return (
         <section>

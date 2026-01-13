@@ -9,9 +9,18 @@ interface PageProps {
     params: Promise<{ id: string }>;
 }
 
+import { getSteamGameDetails } from '@/lib/steamClient';
+import { Game } from '@/lib/types';
+
 export default async function GameDetail({ params }: PageProps) {
     const { id } = await params;
-    const game = await getGameDetails(id);
+
+    let game: Game | null;
+    if (id.startsWith('steam_')) {
+        game = await getSteamGameDetails(id);
+    } else {
+        game = await getGameDetails(id);
+    }
 
     if (!game) {
         notFound();

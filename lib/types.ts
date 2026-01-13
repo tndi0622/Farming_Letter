@@ -16,6 +16,7 @@ export interface Game {
   discount?: number; // percentage off, e.g. 20 for 20%
   genres?: string[];
   developers?: string[];
+  storeLink?: string;
 }
 
 export interface News {

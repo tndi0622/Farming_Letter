@@ -33,7 +33,7 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
                     const isLocked = index > 0; // Lock everything except the latest one as an example/preview
 
                     return (
-                        <div key={newsletter.id} className="relative group">
+                        <div key={newsletter.id} className={`relative group ${index > 0 ? 'hidden md:block' : ''}`}>
                             <Link
                                 href={isLocked ? '#' : `/newsletter/${newsletter.id}`}
                                 className={`block bg-white/5 rounded-2xl overflow-hidden border border-white/5 transition-all ${isLocked ? 'cursor-not-allowed opacity-70' : 'hover:bg-white/10 hover:border-white/20'}`}

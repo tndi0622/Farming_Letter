@@ -6,36 +6,36 @@ export const featuredGame: Game = {
     summary: "실크송의 저주받은 왕국을 탐험하세요! 평단과 유저 모두의 극찬을 받은 액션 어드벤처 후속작이 돌아왔습니다.",
     coverImage: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2670&auto=format&fit=crop", // Placeholder
     platforms: ['PC', 'PS5', 'Switch', 'Xbox'],
-    releaseDate: "2026-02-14",
+    releaseDate: "2025-09-04", // Updated to match API
     rating: 98,
 };
 
 export const newReleases: Game[] = [
     {
         id: 101,
-        title: "파이널 판타지 XVII",
-        coverImage: "https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=2670&auto=format&fit=crop",
-        platforms: ['PS5', 'PC'],
-        releaseDate: "2026-01-06",
-        rating: 92,
+        title: "몬스터 헌터 와일즈",
+        coverImage: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2670&auto=format&fit=crop", // Desert / Adventure
+        platforms: ['PS5', 'PC', 'Xbox'],
+        releaseDate: "2025-02-28",
+        rating: 0,
         price: 69.99
     },
     {
         id: 102,
         title: "문명 VII",
-        coverImage: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=2670&auto=format&fit=crop",
-        platforms: ['PC'],
-        releaseDate: "2026-01-07",
-        rating: 89,
+        coverImage: "https://images.unsplash.com/photo-1461301214746-1e790926d323?q=80&w=2670&auto=format&fit=crop", // Reliable Map/History image
+        platforms: ['PC', 'PS5', 'Switch'],
+        releaseDate: "2025-02-11",
+        rating: 0,
         price: 59.99
     },
     {
         id: 103,
         title: "슈퍼 마리오 오디세이 2",
-        coverImage: "https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=2678&auto=format&fit=crop",
+        coverImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop", // Bright/Game placeholder
         platforms: ['Switch'],
-        releaseDate: "2026-01-05",
-        rating: 96,
+        releaseDate: "TBA",
+        rating: 0,
         price: 59.99
     }
 ];
@@ -44,7 +44,7 @@ export const popularGames: Game[] = [
     {
         id: 201,
         title: "엘든 링: 황금 나무의 그림자",
-        coverImage: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2671&auto=format&fit=crop",
+        coverImage: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2778580/header.jpg", // Official Steam Art
         platforms: ['PC', 'PS5', 'Xbox'],
         releaseDate: "2025-06-21",
         rating: 97
@@ -52,17 +52,17 @@ export const popularGames: Game[] = [
     {
         id: 202,
         title: "GTA VI",
-        coverImage: "https://images.unsplash.com/photo-1593305841991-05c29736ce87?q=80&w=2670&auto=format&fit=crop",
+        coverImage: "https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?q=80&w=2670&auto=format&fit=crop", // Miami Night / Vice City vibe
         platforms: ['PS5', 'Xbox'],
-        releaseDate: "2025-11-15",
-        rating: 99
+        releaseDate: "2026-11-19",
+        rating: 0 // Unreleased
     },
     {
         id: 203,
         title: "더 위쳐 4",
-        coverImage: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2728&auto=format&fit=crop",
+        coverImage: "https://images.unsplash.com/photo-1548588627-f97800c01a1c?q=80&w=2670&auto=format&fit=crop", // Snowy / Wolf vibe
         platforms: ['PC', 'PS5', 'Xbox'],
-        releaseDate: "2026-05-10",
+        releaseDate: "TBA",
         rating: 0 // Not released
     }
 ];
