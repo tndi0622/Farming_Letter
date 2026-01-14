@@ -16,6 +16,7 @@ export interface Game {
   discount?: number; // percentage off, e.g. 20 for 20%
   genres?: string[];
   developers?: string[];
+  store?: string;
   storeLink?: string;
 }
 
@@ -41,4 +42,16 @@ export interface Newsletter {
   date: string;
   summary: string;
   thumbnail: string;
+  intro?: string;
+  highlights?: {
+    title: string;
+    description: string;
+    gameSlug?: string;
+  }[];
+  deepDive?: {
+    title: string;
+    content: string;
+  };
+  editorNote?: string;
+  outro?: string;
 }

@@ -29,6 +29,29 @@ export async function getDeals(params: Record<string, string> = {}): Promise<Gam
     }
 }
 
+const STORE_MAP: Record<string, string> = {
+    '1': 'Steam',
+    '2': 'GamersGate',
+    '3': 'GreenManGaming',
+    '7': 'GOG',
+    '8': 'Origin',
+    '11': 'Humble Store',
+    '15': 'Fanatical',
+    '21': 'WinGameStore',
+    '23': 'GameBillet',
+    '24': 'Voidu',
+    '25': 'Epic Games',
+    '27': 'Gamesplanet',
+    '28': 'Gamesload',
+    '29': 'Ubisoft',
+    '30': 'IndieGala',
+    '31': 'Blizzard',
+    '32': 'AllYouPlay',
+    '33': 'DLGamer',
+    '34': 'Noctre',
+    '35': 'DreamGame'
+};
+
 function mapDealToGame(deal: any): Game {
     // Try to get a high-res image from Steam if steamAppID is present
     let coverImage = deal.thumb;
@@ -44,11 +67,12 @@ function mapDealToGame(deal: any): Game {
         title: deal.title,
         summary: '', // Deals endpoint doesn't provide summary
         coverImage: coverImage,
-        platforms: ['PC'], // Since we filtered by StoreID 1 (Steam)
+        platforms: ['PC'], // Since we filtered by StoreID 1 (Steam) usually, but we might expand
         releaseDate: deal.releaseDate ? new Date(deal.releaseDate * 1000).toISOString().split('T')[0] : 'N/A',
         rating: deal.steamRatingPercent ? parseInt(deal.steamRatingPercent) : parseInt(deal.metacriticScore) || 0,
         price: parseFloat(deal.salePrice),
         discount: Math.round(parseFloat(deal.savings)),
+        store: STORE_MAP[deal.storeID] || 'Steam', // Default to Steam if unknown or if using filtered query
         storeLink: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
     };
 }

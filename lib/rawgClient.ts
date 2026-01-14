@@ -5,7 +5,7 @@ const API_KEY = process.env.NEXT_PUBLIC_RAWG_API_KEY;
 const BASE_URL = 'https://api.rawg.io/api';
 
 if (!API_KEY) {
-    console.warn('RAWG API Key is missing in environment variables');
+    console.warn('RAWG API Key is missing. Please check .env');
 }
 
 export async function getGames(params: Record<string, string> = {}): Promise<Game[]> {
@@ -34,7 +34,7 @@ export async function getGames(params: Record<string, string> = {}): Promise<Gam
     }
 }
 
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop';
+const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2670&auto=format&fit=crop';
 
 // Google Translate 'Free' Endpoint (GTX) - Unofficial but works for light usage
 async function translateText(text: string): Promise<string> {
@@ -130,14 +130,14 @@ export async function getNewReleases(): Promise<Game[]> {
     // to filter for "Major Publishers" and "High Interest" games 
     // as requested by the user, avoiding obscure shovelware.
     const dates = '2024-06-01,2025-12-31';
-    console.log(`Fetching curated new releases with dates: ${dates}`);
+    // console.log(`Fetching curated new releases with dates: ${dates}`);
 
     const games = await getGames({
         dates: dates,
         ordering: '-added', // Changed from -released to -added effectively highlights "Major" & "Anticipated"
         page_size: '6'
     });
-    console.log(`Fetched ${games.length} new releases`);
+    // console.log(`Fetched ${games.length} new releases`);
     return games;
 }
 
@@ -167,7 +167,7 @@ export async function getPopularGames(): Promise<Game[]> {
         metacritic: '80,100', // High quality
         page_size: '8', // Limit to top 8
     });
-    console.log(`Fetched ${games.length} major/popular games`);
+    // console.log(`Fetched ${games.length} major/popular games`);
     return games;
 }
 

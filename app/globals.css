@@ -1,66 +1,125 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-primary: #0070f3;
-  --color-secondary: #7928ca;
-  --color-accent: #ff0080;
-  --color-success: #00e676;
-  --color-warning: #ffc107;
+    --color-primary: #0070f3;
+    --color-secondary: #7928ca;
+    --color-accent: #ff0080;
+    --color-success: #00e676;
+    --color-warning: #ffc107;
+
+    /* Semantic Colors */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-surface: var(--surface);
+    --color-surface-hover: var(--surface-hover);
+    --color-border: var(--border);
 }
 
 :root {
-  --primary: #0070f3;
-  --secondary: #7928ca;
-  --accent: #ff0080;
-  --background: #000000;
-  --surface: #1a1a1a;
-  --text: #ffffff;
-  --success: #00e676;
-  --warning: #ffc107;
+    color-scheme: light;
+    /* Default Light Mode */
+    --background: #f8fafc;
+    /* Slate-50 */
+    --foreground: #0f172a;
+    /* Slate-900 */
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --border: #e2e8f0;
+
+    --primary: #0070f3;
+    --secondary: #7928ca;
+    --accent: #ff0080;
+    --success: #00e676;
+    --warning: #ffc107;
+
+    --font-inter: 'Inter', sans-serif;
+}
+
+.dark {
+    color-scheme: dark;
+    /* Dark Mode */
+    --background: #000000;
+    --foreground: #ffffff;
+    --surface: #1a1a1a;
+    /* Slight gray for cards */
+    --surface-hover: #222222;
+    --border: #333333;
 }
 
 body {
-  background-color: black;
-  color: white;
-  font-family: var(--font-inter), sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+html:not(.dark) body {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
 }
 
 @layer components {
-  .glass-panel {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10;
-  }
+    .glass-panel {
+        @apply bg-white/70 dark:bg-black/30 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-lg dark:shadow-none;
+    }
 
-  .glass-button {
-    @apply bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all duration-300;
-  }
+    .glass-button {
+        @apply bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 backdrop-blur-md transition-all duration-300 rounded-full md:rounded-lg text-gray-800 dark:text-white;
+    }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)];
-  }
+    .gradient-text {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)];
+    }
 
-  .hide-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+    /* Horizontal Scroll Snap & Hide Scrollbar */
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Mobile Horizontal Peeking Fix */
+    .snap-x {
+        scroll-padding-left: 1rem;
+        /* Better snap alignment */
+        scroll-padding-right: 1rem;
+    }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+    background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

@@ -18,12 +18,12 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
         <section className="py-10 md:py-20" id="archive">
             <div className="flex items-center justify-between mb-8 md:mb-12">
                 <div className="space-y-1">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">지난 뉴스레터</h2>
-                    <p className="text-gray-400 text-sm md:text-base">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">지난 뉴스레터</h2>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm md:text-base">
                         지난호는 <span className="text-[--primary] font-bold">멤버십 회원</span>만 볼 수 있습니다.
                     </p>
                 </div>
-                <Link href="/archive" className="flex items-center text-sm font-medium text-[--primary] hover:text-white transition-colors">
+                <Link href="/archive" className="flex items-center text-sm font-medium text-[--primary] hover:text-black dark:hover:text-white transition-colors">
                     전체 보기 <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
             </div>
@@ -36,7 +36,7 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
                         <div key={newsletter.id} className={`relative group ${index > 0 ? 'hidden md:block' : ''}`}>
                             <Link
                                 href={isLocked ? '#' : `/newsletter/${newsletter.id}`}
-                                className={`block bg-white/5 rounded-2xl overflow-hidden border border-white/5 transition-all ${isLocked ? 'cursor-not-allowed opacity-70' : 'hover:bg-white/10 hover:border-white/20'}`}
+                                className={`block bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-zinc-800 transition-all ${isLocked ? 'cursor-not-allowed opacity-70' : 'hover:border-[--primary]/50 shadow-sm dark:shadow-none hover:shadow-xl hover:translate-y-[-4px]'}`}
                                 onClick={(e) => isLocked && e.preventDefault()}
                             >
                                 <div className="relative aspect-[16/10] overflow-hidden">
@@ -46,27 +46,36 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
                                         fill
                                         className={`object-cover transition-transform duration-500 ${isLocked ? 'grayscale blur-[2px]' : 'group-hover:scale-105'}`}
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-60" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+
+                                    {/* Volume Badge */}
+                                    <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded border border-white/20 shadow-lg">
+                                        <span className="text-xs font-bold text-white tracking-wide">
+                                            {newsletter.id.toUpperCase().replace('-', ' ')}
+                                        </span>
+                                    </div>
 
                                     {isLocked && (
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px]">
-                                            <div className="p-3 bg-black/50 rounded-full border border-white/10 mb-2">
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px]">
+                                            <div className="p-3 bg-white/10 rounded-full border border-white/10 mb-2">
                                                 <Lock className="w-6 h-6 text-gray-300" />
                                             </div>
                                             <span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Premium Only</span>
                                         </div>
                                     )}
 
-                                    <div className="absolute bottom-3 left-4 flex items-center space-x-2 text-xs font-medium text-white/90">
-                                        <Calendar className="w-3.5 h-3.5" />
-                                        <span>{newsletter.date}</span>
+                                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-medium text-gray-300">
+                                        <div className="flex items-center space-x-1.5">
+                                            <Calendar className="w-3.5 h-3.5" />
+                                            <span>{newsletter.date}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="p-5 space-y-3">
-                                    <h3 className="font-bold text-lg leading-tight group-hover:text-[--primary] transition-colors line-clamp-2">
+                                <div className="p-5 space-y-3 relative">
+                                    <h3 className="font-bold text-lg md:text-xl leading-snug text-black dark:text-gray-100 group-hover:text-[--primary] transition-colors break-keep">
                                         {newsletter.title}
                                     </h3>
-                                    <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed">
                                         {newsletter.summary}
                                     </p>
                                 </div>

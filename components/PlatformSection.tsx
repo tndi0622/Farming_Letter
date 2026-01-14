@@ -30,7 +30,7 @@ export default function PlatformSection({ data }: PlatformSectionProps) {
     return (
         <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
-                <h2 className="text-xl md:text-2xl font-bold">플랫폼별 추천</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white">플랫폼별 추천</h2>
             </div>
 
             <div className="flex space-x-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
@@ -41,9 +41,9 @@ export default function PlatformSection({ data }: PlatformSectionProps) {
                         <button
                             key={p.id}
                             onClick={() => setActiveTab(p.id)}
-                            className={`flex items-center space-x-2 px-6 py-3 rounded-full font-bold transition-all whitespace-nowrap ${isActive
-                                ? 'bg-white text-black scale-105 shadow-lg shadow-white/10'
-                                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            className={`flex items-center space-x-2 px-6 py-3 rounded-full font-bold transition-all whitespace-nowrap border ${isActive
+                                ? 'bg-black text-white dark:bg-white dark:text-black border-transparent scale-105 shadow-lg shadow-black/10 dark:shadow-white/10'
+                                : 'bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-gray-400 border-transparent hover:bg-gray-200 dark:hover:bg-white/10 hover:text-black dark:hover:text-white'
                                 }`}
                         >
                             <Icon className="w-5 h-5" />
@@ -60,7 +60,7 @@ export default function PlatformSection({ data }: PlatformSectionProps) {
                     </div>
                 ))}
                 {filteredGames.length === 0 && (
-                    <div className="col-span-full py-10 text-center text-gray-500 bg-white/5 rounded-xl border border-white/5">
+                    <div className="col-span-full py-10 text-center text-gray-500 bg-gray-50 dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/5">
                         <p>현재 {activeTab} 추천 게임이 없습니다.</p>
                     </div>
                 )}
