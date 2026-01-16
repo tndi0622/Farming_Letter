@@ -36,6 +36,32 @@ export async function POST(request: Request) {
             );
         }
 
+        // 3.5 Verify Session (Security Check)
+        const authHeader = request.headers.get('Authorization');
+        if (!authHeader) {
+            return NextResponse.json(
+                { error: 'Unauthorized: Missing token' },
+                { status: 401 }
+            );
+        }
+
+        const token = authHeader.replace('Bearer ', '');
+        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+
+        if (authError || !user) {
+            return NextResponse.json(
+                { error: 'Unauthorized: Invalid token' },
+                { status: 401 }
+            );
+        }
+
+        if (user.id !== userId) {
+            return NextResponse.json(
+                { error: 'Unauthorized: User ID mismatch' },
+                { status: 403 }
+            );
+        }
+
         // 4. Delete User
         const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 

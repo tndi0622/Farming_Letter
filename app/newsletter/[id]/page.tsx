@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { Calendar, ArrowLeft, Clock, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import NewsletterSignup from '@/components/NewsletterSignup';
+import NewsletterHero from '@/components/NewsletterHero';
 import { getGameDetails } from '@/lib/rawgClient';
 import GameCard from '@/components/GameCard';
 import CommentSection from '@/components/CommentSection';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 // Helper to parse simple markdown (**text** -> bold) and newlines
 function renderContent(text: string) {

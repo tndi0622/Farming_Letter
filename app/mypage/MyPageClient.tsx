@@ -163,10 +163,16 @@ export default function MyPageClient() {
         if (!confirm('정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없으며, 모든 데이터(찜 목록 등)가 삭제됩니다.')) return;
 
         try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) throw new Error('No active session');
+
             // Call API route for key-protected deletion
             const res = await fetch('/api/auth/delete-account', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.access_token}`
+                },
                 body: JSON.stringify({ userId: user.id })
             });
 
