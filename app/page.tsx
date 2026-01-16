@@ -12,6 +12,7 @@ import { getNewReleases, getIndieSpotlight, getPlatformTrending } from '@/lib/ra
 import { getDeals } from '@/lib/cheapSharkClient';
 import { getSteamSpecials } from '@/lib/steamClient';
 
+
 export default async function Home() {
     const [
         fetchedNewReleases,
@@ -45,10 +46,11 @@ export default async function Home() {
         platforms: ['PC', 'Steam'],
         releaseDate: 'HOT DEAL',
         rating: 0,
-        price: parseInt(deal.salePrice.replace(/[^0-9]/g, '')) || 0,
-        discount: parseInt(deal.discount.replace('%', '')) || 0,
+        price: deal.salePrice, // clean number now
+        discount: deal.discount, // clean number now
         store: 'Steam',
-        storeLink: deal.link
+        storeLink: deal.link,
+        source: 'steam' as const
     }));
 
     const onSaleGames = [...steamGames, ...(fetchedDeals.length > 0 ? fetchedDeals : mockOnSaleGames)].slice(0, 10); // Check top 10 mixed deals
@@ -99,9 +101,6 @@ export default async function Home() {
                                 <Calendar className="w-5 h-5 md:w-6 md:h-6 text-[--primary]" />
                                 <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white">주목할 만한 신작</h2>
                             </div>
-                            <Link href="#" className="flex items-center text-xs md:text-sm text-[--primary] hover:text-black dark:hover:text-white transition-colors">
-                                출시 예정작 더보기 <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1" />
-                            </Link>
                         </div>
 
                         <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:pb-0 md:mx-0 md:px-0 snap-x snap-mandatory hide-scrollbar">
@@ -124,9 +123,6 @@ export default async function Home() {
                                     <span className="text-2xl">💎</span>
                                     <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white">글로벌 인디 스포트라이트</h2>
                                 </div>
-                                <Link href="#" className="flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                                    G-Star / E3 쇼케이스 <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1" />
-                                </Link>
                             </div>
 
                             <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:pb-0 md:mx-0 md:px-0 snap-x snap-mandatory hide-scrollbar">
@@ -146,9 +142,6 @@ export default async function Home() {
                                 <Percent className="w-5 h-5 md:w-6 md:h-6 text-[--success]" />
                                 <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white">검증된 최저가 핫딜</h2>
                             </div>
-                            <Link href="#" className="flex items-center text-xs md:text-sm text-[--success] hover:text-black dark:hover:text-white transition-colors">
-                                전체 세일 보기 <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1" />
-                            </Link>
                         </div>
 
                         <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:pb-0 md:mx-0 md:px-0 snap-x snap-mandatory hide-scrollbar">

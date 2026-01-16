@@ -23,9 +23,6 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
                         지난호는 <span className="text-[--primary] font-bold">멤버십 회원</span>만 볼 수 있습니다.
                     </p>
                 </div>
-                <Link href="/archive" className="flex items-center text-sm font-medium text-[--primary] hover:text-black dark:hover:text-white transition-colors">
-                    전체 보기 <ArrowRight className="w-4 h-4 ml-1" />
-                </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

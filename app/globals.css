@@ -67,15 +67,19 @@ html:not(.dark) body {
 
 @layer components {
     .glass-panel {
-        @apply bg-white/70 dark:bg-black/30 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-lg dark:shadow-none;
+        @apply bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-gray-200/80 dark:border-white/10 shadow-xl dark:shadow-none;
     }
 
     .glass-button {
-        @apply bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 backdrop-blur-md transition-all duration-300 rounded-full md:rounded-lg text-gray-800 dark:text-white;
+        @apply bg-white/80 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-md transition-all duration-300 rounded-full md:rounded-lg text-gray-900 dark:text-white border border-gray-200/50 dark:border-white/5;
     }
 
     .gradient-text {
         @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)];
+    }
+
+    ::selection {
+        @apply bg-[var(--primary)] text-white;
     }
 
     /* Horizontal Scroll Snap & Hide Scrollbar */

@@ -73,7 +73,8 @@ function mapDealToGame(deal: any): Game {
         price: parseFloat(deal.salePrice),
         discount: Math.round(parseFloat(deal.savings)),
         store: STORE_MAP[deal.storeID] || 'Steam', // Default to Steam if unknown or if using filtered query
-        storeLink: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
+        storeLink: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`,
+        source: 'cheapshark' as const
     };
 }
 

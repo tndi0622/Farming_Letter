@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import { getGameDetails } from '@/lib/rawgClient';
 import GameCard from '@/components/GameCard';
+import CommentSection from '@/components/CommentSection';
 
 // Helper to parse simple markdown (**text** -> bold) and newlines
 function renderContent(text: string) {
@@ -185,6 +186,8 @@ export default async function NewsletterPage({ params }: { params: Promise<{ id:
                         </div>
                     </div>
 
+
+
                     {/* Share & Tags */}
                     <div className="mt-16 flex flex-wrap gap-4 items-center justify-between">
                         <div className="flex gap-2">
@@ -199,6 +202,9 @@ export default async function NewsletterPage({ params }: { params: Promise<{ id:
                             공유하기
                         </button>
                     </div>
+
+                    {/* Comment Section */}
+                    <CommentSection newsletterId={id} />
 
                 </article>
 

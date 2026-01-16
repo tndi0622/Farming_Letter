@@ -18,6 +18,7 @@ export interface Game {
   developers?: string[];
   store?: string;
   storeLink?: string;
+  source?: 'rawg' | 'steam' | 'cheapshark' | 'manual';
 }
 
 export interface News {

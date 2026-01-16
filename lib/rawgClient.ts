@@ -83,7 +83,8 @@ function mapRawgGameToGame(rawgGame: any): Game {
         price: 0,
         discount: 0,
         genres: rawgGame.genres?.map((g: any) => g.name) || [],
-        developers: rawgGame.developers?.map((d: any) => d.name) || []
+        developers: rawgGame.developers?.map((d: any) => d.name) || [],
+        source: 'rawg' as const
     };
 }
 

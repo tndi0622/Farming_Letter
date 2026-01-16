@@ -2,9 +2,12 @@
 
 import { Game } from '@/lib/types';
 import Image from 'next/image';
-import { Star, ExternalLink } from 'lucide-react';
+import { Star, ExternalLink, Heart } from 'lucide-react';
 import Link from 'next/link';
 import StoreIcon from './StoreIcon';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 interface GameCardProps {
     game: Game;
@@ -13,6 +16,79 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game, showRank }: GameCardProps) {
+    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    // Check wishlist status on mount
+    useEffect(() => {
+        const checkWishlist = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) return;
+
+            const { data } = await supabase
+                .from('wishlists')
+                .select('*')
+                .eq('user_id', session.user.id)
+                .eq('game_id', String(game.id))
+                .single();
+
+            if (data) setIsWishlisted(true);
+        };
+        checkWishlist();
+    }, [game.id]);
+
+    const handleWishlistClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (loading) return;
+        setLoading(true);
+
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+            if (confirm('찜하기 기능을 사용하려면 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
+                router.push('/login');
+            }
+            setLoading(false);
+            return;
+        }
+
+        try {
+            if (isWishlisted) {
+                // Remove from wishlist
+                const { error } = await supabase
+                    .from('wishlists')
+                    .delete()
+                    .eq('user_id', session.user.id)
+                    .eq('game_id', String(game.id));
+
+                if (error) throw error;
+                setIsWishlisted(false);
+            } else {
+                // Add to wishlist
+                const { error } = await supabase
+                    .from('wishlists')
+                    .insert({
+                        user_id: session.user.id,
+                        game_id: String(game.id),
+                        title: game.title,
+                        cover_image: game.coverImage,
+                        platform: game.platforms[0] || 'Unknown' // Simple store of primary platform
+                    });
+
+                if (error) throw error;
+                setIsWishlisted(true);
+            }
+        } catch (error) {
+            console.error('Wishlist error:', error);
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleStoreClick = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -21,8 +97,12 @@ export default function GameCard({ game, showRank }: GameCardProps) {
         }
     };
 
+    const isInternal = !game.source || game.source === 'rawg' || game.source === 'manual';
+    const linkHref = isInternal ? `/game/${game.id}` : (game.storeLink || '#');
+    const linkTarget = isInternal ? '_self' : '_blank';
+
     return (
-        <Link href={`/game/${game.id}`} className="block h-full group">
+        <Link href={linkHref} target={linkTarget} className="block h-full group" onClick={(e) => !isInternal && !game.storeLink && e.preventDefault()}>
             <div className="relative bg-white dark:bg-zinc-900 rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-800 group-hover:border-[--primary]/50 transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-[--primary]/20 h-full flex flex-col">
                 {/* Image */}
                 <div className="relative aspect-video w-full overflow-hidden">
@@ -36,9 +116,22 @@ export default function GameCard({ game, showRank }: GameCardProps) {
                         <span className="text-sm font-medium text-white/90">상세 보기</span>
                     </div>
 
-                    {/* Rating Badge */}
+                    {/* Wishlist Button (Heart) */}
+                    <button
+                        onClick={handleWishlistClick}
+                        className="absolute top-2 right-2 p-2 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md transition-all z-20 group/heart"
+                    >
+                        <Heart
+                            className={`w-5 h-5 transition-colors ${isWishlisted
+                                    ? 'text-red-500 fill-red-500 scale-110'
+                                    : 'text-white group-hover/heart:text-red-400'
+                                }`}
+                        />
+                    </button>
+
+                    {/* Rating Badge - Moved to left to avoid conflict with heart */}
                     {game.rating > 0 && (
-                        <div className="absolute top-2 right-2 px-2 py-1 bg-black/60 backdrop-blur rounded flex items-center space-x-1 border border-white/10">
+                        <div className="absolute top-2 left-2 px-2 py-1 bg-black/60 backdrop-blur rounded flex items-center space-x-1 border border-white/10">
                             <Star className="w-3 h-3 text-[--warning] fill-current" />
                             <span className={`text-xs font-bold ${game.rating >= 90 ? 'text-[--success]' : 'text-white'}`}>
                                 {game.rating}

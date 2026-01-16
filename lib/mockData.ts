@@ -8,6 +8,7 @@ export const featuredGame: Game = {
     platforms: ['PC', 'PS5', 'Switch', 'Xbox'],
     releaseDate: "2025-09-04",
     rating: 98,
+    source: 'manual'
 };
 
 export const newReleases: Game[] = [
@@ -18,7 +19,8 @@ export const newReleases: Game[] = [
         platforms: ['PS5', 'PC', 'Xbox'],
         releaseDate: "2025-02-28",
         rating: 0,
-        price: 69.99
+        price: 69.99,
+        source: 'manual'
     },
     {
         id: 102,
@@ -27,7 +29,8 @@ export const newReleases: Game[] = [
         platforms: ['PC', 'PS5', 'Switch'],
         releaseDate: "2025-02-11",
         rating: 0,
-        price: 59.99
+        price: 59.99,
+        source: 'manual'
     },
     {
         id: 103,
@@ -47,7 +50,8 @@ export const popularGames: Game[] = [
         coverImage: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2670&auto=format&fit=crop", // Dark atmospheric
         platforms: ['PC', 'PS5', 'Xbox'],
         releaseDate: "2025-06-21",
-        rating: 97
+        rating: 97,
+        source: 'manual'
     },
     {
         id: 202,
@@ -55,7 +59,8 @@ export const popularGames: Game[] = [
         coverImage: "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2670&auto=format&fit=crop", // City/Neon
         platforms: ['PS5', 'Xbox'],
         releaseDate: "2026-11-19",
-        rating: 0
+        rating: 0,
+        source: 'manual'
     },
     {
         id: 203,
@@ -63,7 +68,8 @@ export const popularGames: Game[] = [
         coverImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2668&auto=format&fit=crop", // Nature/Adventure
         platforms: ['PC', 'PS5', 'Xbox'],
         releaseDate: "TBA",
-        rating: 0
+        rating: 0,
+        source: 'manual'
     }
 ];
 
@@ -76,7 +82,8 @@ export const onSaleGames: Game[] = [
         releaseDate: "2020-12-10",
         rating: 86,
         price: 59.99,
-        discount: 50
+        discount: 50,
+        source: 'manual'
     },
     {
         id: 302,
@@ -86,7 +93,8 @@ export const onSaleGames: Game[] = [
         releaseDate: "2024-08-15",
         rating: 94,
         price: 29.99,
-        discount: 20
+        discount: 20,
+        source: 'manual'
     }
 ];
 
