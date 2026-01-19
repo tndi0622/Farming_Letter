@@ -1,3 +1,4 @@
+import { getDeals } from './cheapSharkClient';
 import { Game } from './types';
 import { newReleases, popularGames, onSaleGames, featuredGame } from './mockData';
 
@@ -72,6 +73,22 @@ async function translateText(text: string): Promise<string> {
 }
 
 function mapRawgGameToGame(rawgGame: any): Game {
+    // Extract Store Link (Prioritize Steam -> Epic -> First Available)
+    let storeLink = '';
+    if (rawgGame.stores && Array.isArray(rawgGame.stores)) {
+        const steamStore = rawgGame.stores.find((s: any) => s.store.slug === 'steam');
+        const epicStore = rawgGame.stores.find((s: any) => s.store.slug === 'epic-games');
+
+        if (steamStore) storeLink = steamStore.url;
+        else if (epicStore) storeLink = epicStore.url;
+        else if (rawgGame.stores.length > 0) storeLink = rawgGame.stores[0].url;
+    }
+
+    // Sometimes the website is a good fallback if no store link
+    if (!storeLink && rawgGame.website) {
+        storeLink = rawgGame.website;
+    }
+
     return {
         id: rawgGame.id,
         title: rawgGame.name,
@@ -84,7 +101,8 @@ function mapRawgGameToGame(rawgGame: any): Game {
         discount: 0,
         genres: rawgGame.genres?.map((g: any) => g.name) || [],
         developers: rawgGame.developers?.map((d: any) => d.name) || [],
-        source: 'rawg' as const
+        source: 'rawg' as const,
+        storeLink: storeLink // Add the extracted link
     };
 }
 
@@ -116,7 +134,35 @@ export async function getGameDetails(id: string): Promise<Game | null> {
 
         // Translate summary if available
         if (game.summary) {
-            game.summary = await translateText(game.summary);
+            const translatedSummary = await translateText(game.summary);
+            // Improve readability: Wrap paragraphs in <p> tags and convert single newlines to <br/>
+            game.summary = translatedSummary
+                .split(/\n\n+/) // Split by double newlines into paragraphs
+                .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br/>')}</p>`)
+                .join('');
+        }
+
+        // 2. Fetch Price from CheapShark (using title)
+        try {
+            // "exact" parameter isn't officially documented for list but searching by precise title helps
+            // We search for the title on Steam (storeID=1)
+            const deals = await getDeals({ title: game.title, limit: '1', exact: '0' });
+
+            if (deals && deals.length > 0) {
+                const bestDeal = deals[0];
+                if (bestDeal.price && bestDeal.price > 0) {
+                    game.price = bestDeal.price;
+                    game.discount = bestDeal.discount;
+
+                    // If RAWG didn't have a store link, use CheapShark's redirect
+                    if (!game.storeLink && bestDeal.storeLink) {
+                        game.storeLink = bestDeal.storeLink;
+                    }
+                }
+            }
+        } catch (priceError) {
+            console.warn('Failed to fetch price info:', priceError);
+            // Ignore price fetch errors
         }
 
         return game;

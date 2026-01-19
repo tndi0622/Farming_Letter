@@ -144,7 +144,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
                                 )}
 
                                 {/* Extra Mock Price Info if available in mock data (usually API doesn't give price easily) */}
-                                {game.price && game.price > 0 && (
+                                {game.price !== undefined && game.price > 0 && (
                                     <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/5">
                                         <span className="text-gray-500 dark:text-gray-400">참고 가격</span>
                                         <span className="space-x-2">
