@@ -41,7 +41,7 @@ export default function Header() {
                     {/* Logo */}
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center">
-                            <div className="relative w-16 h-8 md:w-40 md:h-16">
+                            <div className="relative w-24 h-12 md:w-40 md:h-16">
                                 <Image
                                     src="/logo_transparent-B.svg"
                                     alt="Farming Letter Logo"
