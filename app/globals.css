@@ -3,11 +3,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-primary: #0070f3;
-    --color-secondary: #7928ca;
-    --color-accent: #ff0080;
-    --color-success: #00e676;
-    --color-warning: #ffc107;
+    --color-primary: #000000;
+    /* Will be overridden by :root if using var() but good to set base */
+    --color-secondary: #333333;
+    --color-accent: #666666;
+    --color-success: #000000;
+    --color-warning: #000000;
 
     /* Semantic Colors */
     --color-background: var(--background);
@@ -28,11 +29,13 @@
     --surface-hover: #f1f5f9;
     --border: #e2e8f0;
 
-    --primary: #0070f3;
-    --secondary: #7928ca;
-    --accent: #ff0080;
-    --success: #00e676;
-    --warning: #ffc107;
+    /* Monochrome Palette */
+    --primary: #000000;
+    --secondary: #333333;
+    --accent: #666666;
+    --success: #000000;
+    /* User requested strict B&W */
+    --warning: #000000;
 
     --font-inter: 'Inter', sans-serif;
 }
@@ -46,6 +49,13 @@
     /* Slight gray for cards */
     --surface-hover: #222222;
     --border: #333333;
+
+    /* Monochrome Palette (Inverted) */
+    --primary: #ffffff;
+    --secondary: #cccccc;
+    --accent: #999999;
+    --success: #ffffff;
+    --warning: #ffffff;
 }
 
 body {
@@ -79,7 +89,7 @@ html:not(.dark) body {
     }
 
     ::selection {
-        @apply bg-[var(--primary)] text-white;
+        @apply bg-[var(--primary)] text-white dark:text-black;
     }
 
     /* Horizontal Scroll Snap & Hide Scrollbar */

@@ -87,7 +87,7 @@ export default function AuthForm({ view }: AuthFormProps) {
         <div className="w-full max-w-md mx-auto">
             <div className="glass-panel border border-white/20 dark:border-white/10 bg-white/50 dark:bg-black/50 p-8 rounded-2xl shadow-xl backdrop-blur-md">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[--primary] to-purple-500 mb-2">
+                    <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
                         {view === 'login' ? '다시 오셨군요!' : '모험을 시작하세요'}
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 text-sm">
@@ -199,7 +199,7 @@ export default function AuthForm({ view }: AuthFormProps) {
                         {view === 'login' ? '아직 계정이 없으신가요?' : '이미 계정이 있으신가요?'} {''}
                         <Link
                             href={view === 'login' ? '/signup' : '/login'}
-                            className="font-bold text-[--primary] hover:text-purple-500 transition-colors"
+                            className="font-bold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
                         >
                             {view === 'login' ? '회원가입하기' : '로그인하기'}
                         </Link>

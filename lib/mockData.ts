@@ -54,9 +54,9 @@ export const popularGames: Game[] = [
         source: 'manual'
     },
     {
-        id: 202,
+        id: "grand-theft-auto-vi", // Changed from 202 to match slug
         title: "GTA VI",
-        coverImage: "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2670&auto=format&fit=crop", // City/Neon
+        coverImage: "https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=2670&auto=format&fit=crop", // Changed to a more GTA-like vibe (Sunset/City) or keep previous
         platforms: ['PS5', 'Xbox'],
         releaseDate: "2026-11-19",
         rating: 0,
@@ -70,6 +70,17 @@ export const popularGames: Game[] = [
         releaseDate: "TBA",
         rating: 0,
         source: 'manual'
+    },
+    {
+        id: "od", // Manual entry for Kojima's OD to avoid API conflict
+        title: "OD",
+        summary: "코지마 히데오가 선보이는 새로운 형태의 몰입형 공포 게임. '소셜 스크림 시스템'을 통해 클라우드 게이밍의 잠재력을 극한으로 시험합니다. 이 게임은 단순한 공포를 넘어 플레이어의 공포 한계점을 테스트하는 실험적인 작품입니다.",
+        coverImage: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=2670&auto=format&fit=crop", // Dark/Horror/Abstract
+        platforms: ['Xbox', 'PC'],
+        releaseDate: "TBA",
+        rating: 0,
+        source: 'manual',
+        developers: ['Kojima Productions']
     }
 ];
 

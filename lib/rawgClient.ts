@@ -108,13 +108,10 @@ function mapRawgGameToGame(rawgGame: any): Game {
 
 export async function getGameDetails(id: string): Promise<Game | null> {
     // 1. Check Mock Data first
-    const numericId = parseInt(id);
-    if (!isNaN(numericId)) {
-        const allMocks = [...newReleases, ...popularGames, ...onSaleGames, featuredGame];
-        const foundMock = allMocks.find(g => g.id === numericId);
-        if (foundMock) {
-            return foundMock;
-        }
+    const allMocks = [...newReleases, ...popularGames, ...onSaleGames, featuredGame];
+    const foundMock = allMocks.find(g => String(g.id) === id);
+    if (foundMock) {
+        return foundMock;
     }
 
     if (!API_KEY) return null;

@@ -49,7 +49,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
                             </h1>
                             {game.rating > 0 && (
                                 <div className="flex items-center space-x-2 bg-black/80 dark:bg-white/10 backdrop-blur px-4 py-2 rounded-lg border border-white/10 mb-2">
-                                    <Star className="w-5 h-5 text-[--warning] fill-current" />
+                                    <Star className="w-5 h-5 text-black dark:text-white fill-current" />
                                     <span className="text-xl font-bold text-white">{game.rating}</span>
                                     <span className="text-sm text-gray-400">/ 100</span>
                                 </div>
@@ -92,7 +92,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
                         {/* Summary Section */}
                         <section>
                             <h2 className="text-2xl font-bold mb-4 flex items-center">
-                                <span className="w-1.5 h-6 bg-[--primary] mr-3 rounded-full"></span>
+                                <span className="w-1.5 h-6 bg-black dark:bg-white mr-3 rounded-full"></span>
                                 게임 소개
                             </h2>
                             <div className="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -129,7 +129,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
                                         href={game.storeLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center justify-between w-full p-4 rounded-xl bg-[--primary] text-white hover:bg-[--primary]/90 transition-colors font-bold shadow-lg shadow-[--primary]/20 group"
+                                        className="flex items-center justify-between w-full p-4 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors font-bold shadow-lg group"
                                     >
                                         <span>스토어 바로가기</span>
                                         <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -149,7 +149,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
                                         <span className="text-gray-500 dark:text-gray-400">참고 가격</span>
                                         <span className="space-x-2">
                                             {game.discount && (
-                                                <span className="text-sm text-[--success] bg-[--success]/10 px-2 py-0.5 rounded font-bold">-{game.discount}%</span>
+                                                <span className="text-sm text-black dark:text-white bg-gray-200 dark:bg-zinc-700 px-2 py-0.5 rounded font-bold">-{game.discount}%</span>
                                             )}
                                             <span className="font-bold text-lg">
                                                 {game.price > 500 ? `₩${game.price.toLocaleString()}` : `$${game.price}`}

@@ -13,7 +13,7 @@ export default function SignupPage() {
         <div className="min-h-screen pt-24 pb-12 flex items-center justify-center px-4 bg-white dark:bg-black transition-colors">
             {/* Background Decorations */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] opacity-50" />
+                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gray-500/10 rounded-full blur-[100px] opacity-50" />
                 <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[--primary]/10 rounded-full blur-[100px] opacity-50" />
             </div>
 
