@@ -181,7 +181,6 @@ export async function getNewReleases(): Promise<Game[]> {
         ordering: '-added', // Changed from -released to -added effectively highlights "Major" & "Anticipated"
         page_size: '6'
     });
-    // console.log(`Fetched ${games.length} new releases`);
     return games;
 }
 
@@ -211,7 +210,6 @@ export async function getPopularGames(): Promise<Game[]> {
         metacritic: '80,100', // High quality
         page_size: '8', // Limit to top 8
     });
-    // console.log(`Fetched ${games.length} major/popular games`);
     return games;
 }
 
