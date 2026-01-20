@@ -9,6 +9,11 @@ if (!API_KEY) {
     console.warn('RAWG API Key is missing. Please check .env');
 }
 
+// Helper to get current date in YYYY-MM-DD format
+function getToday(): string {
+    return new Date().toISOString().split('T')[0];
+}
+
 export async function getGames(params: Record<string, string> = {}): Promise<Game[]> {
     if (!API_KEY) return [];
 
@@ -170,26 +175,21 @@ export async function getGameDetails(id: string): Promise<Game | null> {
 }
 
 export async function getNewReleases(): Promise<Game[]> {
-    // Fetch upcoming/recent games but order by POPULARITY (-added) 
-    // to filter for "Major Publishers" and "High Interest" games 
-    // as requested by the user, avoiding obscure shovelware.
-    const dates = '2024-06-01,2025-12-31';
-    // console.log(`Fetching curated new releases with dates: ${dates}`);
+    // Dynamic date range: 2024-01-01 to Current Date
+    const dates = `2024-01-01,${getToday()}`;
 
     const games = await getGames({
         dates: dates,
-        ordering: '-added', // Changed from -released to -added effectively highlights "Major" & "Anticipated"
+        ordering: '-added', // High Interest
         page_size: '6'
     });
     return games;
 }
 
 export async function getIndieSpotlight(): Promise<Game[]> {
-    // "Global Indie Spotlight" - Simulating "Latest Game Show" entries (G-Star/E3/TGS)
-    // We look for very recent (late 2025 - current 2026) high-rated Indies.
-    // Ideally this would be a crawled list from specific event pages, 
-    // but for now we use 'Indie' genre + 'Recent' + 'Verified Quality'.
-    const dates = '2025-09-01,2026-12-31';
+    // Dynamic date range: 2024-01-01 to Current Date
+    const dates = `2024-01-01,${getToday()}`;
+
     const games = await getGames({
         ordering: '-rating', // Highest rated first
         genres: 'indie',
@@ -201,9 +201,9 @@ export async function getIndieSpotlight(): Promise<Game[]> {
 }
 
 export async function getPopularGames(): Promise<Game[]> {
-    // "Major Games" / "Trending AAA"
-    // Filter for games released in the last ~1 year (relative to Jan 2026) + High Popularity
-    const dates = '2025-01-01,2026-01-13';
+    // Dynamic date range: 2024-01-01 to Current Date
+    const dates = `2024-01-01,${getToday()}`;
+
     const games = await getGames({
         dates: dates,
         ordering: '-added', // Trending recently
@@ -215,7 +215,8 @@ export async function getPopularGames(): Promise<Game[]> {
 
 export async function getPlatformTrending(platformId: string): Promise<Game[]> {
     // Fetch trending games specific to a platform
-    const dates = '2024-01-01,2026-01-13'; // Extended range for platform libraries
+    const dates = `2024-01-01,${getToday()}`;
+
     return getGames({
         platforms: platformId,
         dates: dates,
@@ -226,6 +227,7 @@ export async function getPlatformTrending(platformId: string): Promise<Game[]> {
 
 export async function getOnSaleGames(): Promise<Game[]> {
     // This is a fallback if CheapShark fails or is not used
+    // Applying same dynamic logic implicitly via simple popularity if needed, but keeping simple here
     return getGames({
         ordering: '-metacritic',
         page_size: '8'
