@@ -53,7 +53,9 @@ export default async function Home() {
         source: 'steam' as const
     }));
 
-    const onSaleGames = [...steamGames, ...(fetchedDeals.length > 0 ? fetchedDeals : mockOnSaleGames)].slice(0, 10); // Check top 10 mixed deals
+    const rawOnSaleGames = [...steamGames, ...(fetchedDeals.length > 0 ? fetchedDeals : mockOnSaleGames)];
+    const uniqueOnSaleGames = Array.from(new Map(rawOnSaleGames.map(game => [game.id, game])).values());
+    const onSaleGames = uniqueOnSaleGames.slice(0, 10); // Check top 10 mixed deals
     const indieGames = fetchedIndieGames.length > 0 ? fetchedIndieGames : [];
 
     // Combine all mocks for fallback filtering
