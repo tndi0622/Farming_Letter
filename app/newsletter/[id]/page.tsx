@@ -17,8 +17,9 @@ function renderContent(text: string) {
     return text.split('\n').map((line, i) => {
         if (!line.trim()) return <br key={i} className="hidden sm:block" />; // Handle multiple newlines elegantly
         return (
-            <p key={i} className="mb-4" dangerouslySetInnerHTML={{
-                __html: line.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+
+            <p key={i} className="mb-4 text-left break-keep leading-relaxed" dangerouslySetInnerHTML={{
+                __html: line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
             }} />
         );
     });
@@ -73,10 +74,10 @@ export default async function NewsletterPage({ params }: { params: Promise<{ id:
                                 5분 읽기
                             </div>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-gray-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:to-gray-400">
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-gray-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:to-gray-400 break-keep">
                             {newsletter.title}
                         </h1>
-                        <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto break-keep">
                             {newsletter.summary}
                         </p>
                     </header>
@@ -97,7 +98,7 @@ export default async function NewsletterPage({ params }: { params: Promise<{ id:
                     <div className="prose prose-lg max-w-none dark:prose-invert text-gray-700 dark:text-gray-300/90 leading-relaxed">
 
                         {/* Intro */}
-                        <div className="text-xl leading-relaxed text-gray-800 dark:text-gray-200 mb-12 drop-shadow-sm font-light">
+                        <div className="text-xl leading-relaxed text-gray-800 dark:text-gray-200 mb-12 drop-shadow-sm font-light break-keep">
                             {renderContent(newsletter.intro || '')}
                         </div>
 
@@ -158,8 +159,8 @@ export default async function NewsletterPage({ params }: { params: Promise<{ id:
                                     </h2>
 
                                     <div className="pl-6 border-l-2 border-gray-200 dark:border-white/10 space-y-6">
-                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{newsletter.deepDive.title}</h3>
-                                        <div className="text-gray-700 dark:text-gray-300 leading-loose">
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white break-keep">{newsletter.deepDive.title}</h3>
+                                        <div className="text-gray-700 dark:text-gray-300 leading-loose break-keep">
                                             {renderContent(newsletter.deepDive.content)}
                                         </div>
                                     </div>
