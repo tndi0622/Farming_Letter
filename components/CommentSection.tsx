@@ -60,21 +60,32 @@ export default function CommentSection({ newsletterId }: CommentSectionProps) {
         if (!user || !newComment.trim()) return;
 
         setSubmitting(true);
-        const { error } = await supabase
+        console.log('Submitting comment...', {
+            newsletterId,
+            userId: user.id,
+            userName: user.user_metadata?.full_name || '익명 게이머',
+            content: newComment.trim()
+        });
+
+        const { data, error } = await supabase
             .from('comments')
             .insert({
                 newsletter_id: newsletterId,
                 user_id: user.id,
                 user_name: user.user_metadata?.full_name || '익명 게이머',
                 content: newComment.trim(),
-            });
+            })
+            .select()
+            .single();
 
-        if (!error) {
+        if (!error && data) {
+            console.log('Comment submitted successfully:', data);
             setNewComment('');
-            fetchComments();
+            // Optimistic update or fetch
+            setComments(prev => [data as Comment, ...prev]);
         } else {
-            alert('댓글 작성에 실패했습니다.');
-            console.error(error);
+            console.error('Error submitting comment:', error);
+            alert(`댓글 작성에 실패했습니다: ${error?.message}`);
         }
         setSubmitting(false);
     };
