@@ -136,8 +136,8 @@ export const recentNewsletters: Newsletter[] = [
                 gameSlug: "the-witcher-4"
             },
             {
-                title: "오픈월드의 새로운 기준, GTA VI",
-                description: "콘솔 독점 기간이 끝나고 PC 버전 발매에 대한 구체적인 로드맵이 발표될 것으로 보입니다. 모드(MOD) 커뮤니티의 활성화가 기대됩니다.",
+                title: "명작이 돌아왔다, GTA VI",
+                description: "올해 11월에 출시예정인 GTA VI, 모든 게이머가 집중하고있습니다. 여러번의 연기끝에 돌아온 GTA VI 과연 명작의 명성을 이어갈 수 있을까요?",
                 gameSlug: "grand-theft-auto-vi"
             },
             {
