@@ -53,7 +53,7 @@ export default function AuthForm({ view }: AuthFormProps) {
 
         try {
             if (view === 'signup') {
-                const { error } = await supabase.auth.signUp({
+                const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                     options: {
@@ -64,7 +64,29 @@ export default function AuthForm({ view }: AuthFormProps) {
                     },
                 });
                 if (error) throw error;
-                alert('회원가입 확인 메일을 발송했습니다. 이메일을 확인해주세요!');
+
+                // 이메일 확인 알림 제거 및 바로 로그인 시도
+                if (data.session) {
+                    router.push('/');
+                    router.refresh();
+                } else {
+                    // 세션이 바로 생성되지 않은 경우 (보통 이메일 확인 설정 때문)
+                    // 로그인 시도
+                    const { error: signInError } = await supabase.auth.signInWithPassword({
+                        email,
+                        password,
+                    });
+
+                    if (!signInError) {
+                        router.push('/');
+                        router.refresh();
+                    } else {
+                        // 이메일 확인이 필수인 경우 여기서 실패할 수 있음
+                        // 사용자 요청에 따라 알림은 띄우지 않거나, 최소한의 안내만 함
+                        console.error('Auto-login failed:', signInError);
+                        alert('자동 로그인에 실패했습니다. Supabase 설정에서 이메일 확인을 비활성화했는지 확인해주세요.');
+                    }
+                }
             } else {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
