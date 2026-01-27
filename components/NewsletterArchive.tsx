@@ -57,7 +57,7 @@ export default function NewsletterArchive({ newsletters }: NewsletterArchiveProp
                                             <div className="p-3 bg-white/10 rounded-full border border-white/10 mb-2">
                                                 <Lock className="w-6 h-6 text-gray-300" />
                                             </div>
-                                            <span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Premium Only</span>
+                                            <span className="text-xs font-bold text-red-400 uppercase tracking-wider">Premium Only</span>
                                         </div>
                                     )}
 
