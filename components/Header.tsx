@@ -43,7 +43,7 @@ export default function Header() {
                         <Link href="/" className="flex items-center">
                             <div className="relative w-24 h-12 md:w-40 md:h-16">
                                 <Image
-                                    src="/logo_transparent-B.svg"
+                                    src="/logo_transparent-B_fix.svg"
                                     alt="Farming Letter Logo"
                                     fill
                                     className="object-contain dark:invert"
