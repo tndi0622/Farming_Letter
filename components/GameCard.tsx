@@ -13,30 +13,33 @@ interface GameCardProps {
     game: Game;
     showRank?: number;
     featured?: boolean;
+    initialIsWishlisted?: boolean;
 }
 
-export default function GameCard({ game, showRank }: GameCardProps) {
-    const [isWishlisted, setIsWishlisted] = useState(false);
+export default function GameCard({ game, showRank, initialIsWishlisted }: GameCardProps) {
+    const [isWishlisted, setIsWishlisted] = useState(initialIsWishlisted ?? false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    // Check wishlist status on mount
+    // Check wishlist status on mount only if initial status is unknown
     useEffect(() => {
+        if (initialIsWishlisted !== undefined) return;
+
         const checkWishlist = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) return;
 
-            const { data } = await supabase
+            const { data, error } = await supabase
                 .from('wishlists')
                 .select('*')
                 .eq('user_id', session.user.id)
                 .eq('game_id', String(game.id))
-                .single();
+                .maybeSingle();
 
             if (data) setIsWishlisted(true);
         };
         checkWishlist();
-    }, [game.id]);
+    }, [game.id, initialIsWishlisted]);
 
     const handleWishlistClick = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -123,8 +126,8 @@ export default function GameCard({ game, showRank }: GameCardProps) {
                     >
                         <Heart
                             className={`w-5 h-5 transition-colors ${isWishlisted
-                                    ? 'text-red-500 fill-red-500 scale-110'
-                                    : 'text-white group-hover/heart:text-red-400'
+                                ? 'text-red-500 fill-red-500 scale-110'
+                                : 'text-white group-hover/heart:text-red-400'
                                 }`}
                         />
                     </button>

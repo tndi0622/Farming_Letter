@@ -380,7 +380,7 @@ export default function MyPageClient() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                                 {wishlist.map((game) => (
                                     <div key={game.id} className="h-80">
-                                        <GameCard game={game} />
+                                        <GameCard game={game} initialIsWishlisted={true} />
                                     </div>
                                 ))}
                             </div>

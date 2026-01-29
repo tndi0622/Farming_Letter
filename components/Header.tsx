@@ -122,7 +122,14 @@ export default function Header() {
                         <div className="border-t border-gray-200 dark:border-white/10 my-2 pt-2">
                             {user ? (
                                 <div className="space-y-2 px-3">
-                                    <div className="text-sm text-gray-500">로그인 정보: {user.email}</div>
+                                    <div className="text-sm text-gray-500 mb-2">로그인 정보: {user.email}</div>
+                                    <Link
+                                        href="/mypage"
+                                        className="block py-2 text-base font-medium text-gray-900 dark:text-gray-100 hover:text-[--primary]"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        마이페이지
+                                    </Link>
                                     <button
                                         onClick={handleLogout}
                                         className="w-full text-left py-2 text-red-500 font-bold"
